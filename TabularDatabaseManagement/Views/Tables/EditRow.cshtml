@@ -1,0 +1,39 @@
+﻿@model Tuple<TabularDatabaseManagement.Models.Table, TabularDatabaseManagement.Models.Row>
+
+<h1>Редагувати рядок у таблиці "@Model.Item1.Name"</h1>
+
+@using (Html.BeginForm())
+{
+    @for (int i = 0; i < Model.Item1.Fields.Count; i++)
+    {
+        var field = Model.Item1.Fields[i];
+        var value = Model.Item2.Values[field.Name];
+
+        <div class="form-group">
+            <label>@field.Name (@field.Type)</label>
+            @if (field.Type == DataType.Date)
+            {
+                <input type="date" name="values[@field.Name]" class="form-control" value="@(((DateTime)value).ToString("yyyy-MM-dd"))" required />
+            }
+            else if (field.Type == DataType.DateInterval)
+            {
+                // Ділимо значення інтервалу на два поля
+                var dates = value.ToString().Split('-');
+                <div class="row">
+                    <div class="col">
+                        <input type="date" name="values[@field.Name]_Start" class="form-control" value="@dates[0].Trim()" required />
+                    </div>
+                    <div class="col">
+                        <input type="date" name="values[@field.Name]_End" class="form-control" value="@dates[1].Trim()" required />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="text" name="values[@field.Name]" class="form-control" value="@value" required />
+            }
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Зберегти</button>
+    <a class="btn btn-secondary" href="@Url.Action("Details", "Tables", new { name = Model.Item1.Name })">Повернутися</a>
+}

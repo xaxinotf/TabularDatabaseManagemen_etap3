@@ -1,0 +1,20 @@
+{
+  "Tables": [
+    {
+      "Name": "testtable1",
+      "Fields": [
+        {
+          "Name": "field1",
+          "Type": 6
+        }
+      ],
+      "Rows": [
+        {
+          "Values": {
+            "field1": "2024-09-30 - 2024-10-03"
+          }
+        }
+      ]
+    }
+  ]
+}

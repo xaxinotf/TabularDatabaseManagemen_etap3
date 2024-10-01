@@ -1,0 +1,35 @@
+﻿@model TabularDatabaseManagement.Models.Table
+
+<h1>Додати рядок до таблиці "@Model.Name"</h1>
+
+@using (Html.BeginForm())
+{
+    @foreach (var field in Model.Fields)
+    {
+        <div class="form-group">
+            <label>@field.Name (@field.Type)</label>
+            @if (field.Type == DataType.Date)
+            {
+                <input type="date" name="values[@field.Name]" class="form-control" required />
+            }
+            else if (field.Type == DataType.DateInterval)
+            {
+                <!-- Додаємо два окремі поля для дати початку та завершення -->
+                <div class="row">
+                    <div class="col">
+                        <input type="date" name="values[@field.Name]_Start" class="form-control" placeholder="Початок" required />
+                    </div>
+                    <div class="col">
+                        <input type="date" name="values[@field.Name]_End" class="form-control" placeholder="Завершення" required />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="text" name="values[@field.Name]" class="form-control" required />
+            }
+        </div>
+    }
+    <button type="submit" class="btn btn-success">Додати</button>
+    <a class="btn btn-secondary" href="@Url.Action("Details", "Tables", new { name = Model.Name })">Повернутися</a>
+}

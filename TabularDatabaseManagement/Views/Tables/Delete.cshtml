@@ -1,0 +1,13 @@
+﻿@model TabularDatabaseManagement.Models.Table
+
+<h1 class="text-danger">Видалити таблицю "@Model.Name"?</h1>
+
+<div class="alert alert-warning" role="alert">
+    <p><strong>Увага!</strong> Ви дійсно бажаєте видалити цю таблицю? Ця дія не може бути скасована.</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    <button type="submit" class="btn btn-danger">Видалити</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Tables")">Скасувати</a>
+}

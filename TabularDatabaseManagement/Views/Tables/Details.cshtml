@@ -1,0 +1,63 @@
+﻿@model TabularDatabaseManagement.Models.Table
+
+<h1>Таблиця "@Model.Name"</h1>
+
+<h3>Поля</h3>
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>Назва поля</th>
+            <th>Тип даних</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var field in Model.Fields)
+        {
+            <tr>
+                <td>@field.Name</td>
+                <td>@field.Type</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Рядки</h3>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            @foreach (var field in Model.Fields)
+            {
+                <th>@field.Name</th>
+            }
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Rows)
+        {
+            <tr>
+                @foreach (var field in Model.Fields)
+                {
+                    <td>
+                        @if (field.Type == DataType.Date)
+                        {
+                            @(((DateTime)row.Values[field.Name]).ToString("yyyy-MM-dd"))
+                        }
+                        else
+                        {
+                            @row.Values[field.Name]
+                        }
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-sm btn-warning" href="@Url.Action("EditRow", "Tables", new { name = Model.Name, index = Model.Rows.IndexOf(row) })">Редагувати</a>
+                    <a class="btn btn-sm btn-danger" href="@Url.Action("DeleteRow", "Tables", new { name = Model.Name, index = Model.Rows.IndexOf(row) })">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="@Url.Action("AddRow", "Tables", new { name = Model.Name })">Додати рядок</a>
+<a class="btn btn-secondary" href="@Url.Action("Index", "Tables")">Повернутися до списку таблиць</a>
+<a class="btn btn-danger" href="@Url.Action("Delete", "Tables", new { name = Model.Name })">Видалити таблицю</a>

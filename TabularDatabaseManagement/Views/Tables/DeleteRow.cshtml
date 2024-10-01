@@ -1,0 +1,14 @@
+﻿@model Tuple<TabularDatabaseManagement.Models.Table, int>
+
+<h1 class="text-danger">Видалити рядок з таблиці "@Model.Item1.Name"?</h1>
+
+<div class="alert alert-warning" role="alert">
+    <p><strong>Увага!</strong> Ви дійсно бажаєте видалити цей рядок? Ця дія не може бути скасована.</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    <button type="submit" class="btn btn-danger">Видалити</button>
+    <a class="btn btn-secondary" href="@Url.Action("Details", "Tables", new { name = Model.Item1.Name })">Скасувати</a>
+
+}

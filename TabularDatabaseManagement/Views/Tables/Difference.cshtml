@@ -1,0 +1,31 @@
+﻿@model List<TabularDatabaseManagement.Models.Table>
+
+<h1>Різниця таблиць</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <label>Перша таблиця</label>
+        <select name="tableName1" class="form-control">
+            @foreach (var table in Model)
+            {
+                <option value="@table.Name">@table.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Друга таблиця</label>
+        <select name="tableName2" class="form-control">
+            @foreach (var table in Model)
+            {
+                <option value="@table.Name">@table.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Назва результатної таблиці</label>
+        <input type="text" name="resultTableName" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Виконати операцію</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Tables")">Повернутися до списку таблиць</a>
+}
